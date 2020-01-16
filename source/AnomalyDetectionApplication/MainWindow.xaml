@@ -1,0 +1,101 @@
+﻿<Window x:Class="AnomalyDetectionApplication.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AnomalyDetectionApplication"
+        mc:Ignorable="d"
+         Title="Поиск аномалий" Icon="Resources/anomaly_detection_icon.ico" Width="1280" MinWidth="1280" Height="1000" MinHeight="1000" ResizeMode="NoResize" Foreground="Black" WindowStartupLocation="CenterScreen">
+    <Grid Name="MainGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Disabled" Background="#FFE8E8E8" Margin="0,0,0,0">
+        <Grid HorizontalAlignment="Left" Height="938" VerticalAlignment="Top" Width="306" Margin="10,10,0,0">
+            <Border BorderBrush="#888" BorderThickness="1" CornerRadius="4" />
+            <Label Content="Данные для исследования" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
+
+            <Button Name="LoadFromFileButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="286" Height="45" Content="Загрузить из файла" Background="#2196F3" Foreground="White" BorderBrush="#42A5F5" FontFamily="Segoe UI Semibold" Margin="10,57,0,0" Click="LoadFromFileButton_Click" />
+            <Label Name="FilenameLabel" Content="файл не выбран" ToolTip="Название загруженного файла" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF616161" FontWeight="Bold" HorizontalContentAlignment="Center" Width="286" Margin="10,31,0,0"/>
+
+            <Grid HorizontalAlignment="Left" Height="82" VerticalAlignment="Top" Width="286" Margin="10,107,0,0">
+                <Border BorderBrush="#888" BorderThickness="1" CornerRadius="4" />
+                <Label Content="О данных" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
+
+                <Label Content="Количество объектов:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,26,0,0"/>
+                <Label Name="ObjectAmountLabel" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="142,26,0,0" Width="134"/>
+
+                <Label Content="Количество параметров:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,52,0,0"/>
+                <Label Name="FeatureAmountLabel" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="156,52,0,0" Width="120"/>
+            </Grid>
+
+            <CheckBox Name="DisplaySamplesCheckBox" Content="Отображать объекты" IsChecked="False" HorizontalAlignment="Left" Margin="10,194,0,0" VerticalAlignment="Top" Width="286" Checked="DisplaySamplesCheckBox_Checked" Unchecked="DisplaySamplesCheckBox_Unchecked" />
+            <ComboBox Name="FeatureComboBox" ToolTip="Выбор отображаемого параметрв" IsEnabled="True" HorizontalAlignment="Left" Margin="10,214,0,0" VerticalAlignment="Top" Width="286" VerticalContentAlignment="Center" Height="26" SelectionChanged="FeatureComboBox_SelectionChanged" />
+            <TextBox Name="SamplesTextBox" IsEnabled="False" HorizontalAlignment="Stretch" Margin="10,245,10,60" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto" IsReadOnly="True" />
+
+            <Button Name="ExitButton" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="286" Height="45" Content="Выход" ToolTip="Закрыть приложение" Background="#2196F3" BorderBrush="#42A5F5" Foreground="White" FontFamily="Segoe UI Semibold" Click="ExitButton_Click" />
+        </Grid>
+
+        <Grid HorizontalAlignment="Left" Height="938" VerticalAlignment="Top" Width="463" Margin="321,10,0,0">
+            <Border BorderBrush="#888" BorderThickness="1" CornerRadius="4" />
+            <Label Content="Статистическое обнаружение" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
+
+            <Grid HorizontalAlignment="Left" Height="153" VerticalAlignment="Top" Width="443" Margin="10,26,0,0">
+                <Border BorderBrush="#888" BorderThickness="1" CornerRadius="4" />
+                <Label Content="Статистическая модель" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
+
+                <Label Name="StatisticsModelFileNameLabel" Content="модель не выбрана" ToolTip="Название загруженного файла" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF616161" FontWeight="Bold" HorizontalContentAlignment="Center" Width="423" Margin="10,26,0,0" Height="25"/>
+                <Button Name="GenerateStatisticsModelButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="423" Height="45" Content="Создать модель" Background="#2196F3" Foreground="White" BorderBrush="#42A5F5" FontFamily="Segoe UI Semibold" Margin="10,51,0,0" Click="GenerateStatisticsModelButton_Click" />
+                <Button Name="LoadStatisticsModelButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="423" Height="45" Content="Загрузить модель" Background="#2196F3" Foreground="White" BorderBrush="#42A5F5" FontFamily="Segoe UI Semibold" Margin="10,101,0,0" Click="LoadStatisticsModelButton_Click" />
+            </Grid>
+
+            <Grid HorizontalAlignment="Left" Height="744" VerticalAlignment="Top" Width="443" Margin="10,184,0,0">
+                <Border BorderBrush="#888" BorderThickness="1" CornerRadius="4" />
+                <Label Content="Обнаружение аномалий" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
+
+                <Grid HorizontalAlignment="Left" Height="88" VerticalAlignment="Top" Width="423" Margin="10,26,0,0">
+                    <Border BorderBrush="#888" BorderThickness="1" CornerRadius="4" />
+                    <Label Content="Алгоритмы обнаружения" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
+
+                    <CheckBox Name="CochraneCoxApproximationsCheckBox" Content="Критерий Кохрана-Кокса (средние значения)" IsEnabled="False" IsChecked="True" HorizontalAlignment="Left" Margin="10,26,0,0" VerticalAlignment="Top" Width="404" Checked="CochraneCoxApproximationsCheckBox_Checked" Unchecked="CochraneCoxApproximationsCheckBox_Unchecked" />
+                    <CheckBox Name="FischerApproximationsCheckBox" Content="Критерий Фишера (средние значения)" IsEnabled="False" IsChecked="True" HorizontalAlignment="Left" Margin="10,46,0,0" VerticalAlignment="Top" Width="404" Checked="FischerApproximationsCheckBox_Checked" Unchecked="FischerApproximationsCheckBox_Unchecked" />
+                    <CheckBox Name="FischerDispersionCheckBox" Content="Критерий Фишера (дисперсия)" IsEnabled="False" IsChecked="True" HorizontalAlignment="Left" Margin="10,66,0,0" VerticalAlignment="Top" Width="413" Checked="FischerDispersionCheckBox_Checked" Unchecked="FischerDispersionCheckBox_Unchecked" />
+                </Grid>
+
+                <Label Content="Чувствительность:" HorizontalAlignment="Left" Margin="5,119,0,0" VerticalAlignment="Top" Width="122"/>
+                <TextBox Name="SensivityTextBox" IsEnabled="False" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="1,0" VerticalAlignment="Top" Width="314" VerticalContentAlignment="Center" Margin="119,122,0,0"  TextChanged="SensivityTextBox_TextChanged"/>
+
+                <Button Name="SeachAnomaliesByStatisticsButton" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Top" Width="423" Height="45" Content="Искать аномалии" Background="#2196F3" Foreground="White" BorderBrush="#42A5F5" FontFamily="Segoe UI Semibold" Margin="10,150,0,0" Click="SearchAnomaliesByStatisticsButton_Click" />
+
+                <CheckBox Name="DisplayStatisticsResultsBox" Content="Отображать результаты" IsEnabled="False" IsChecked="False" HorizontalAlignment="Left" Margin="10,200,0,0" VerticalAlignment="Top" Width="423" Checked="DisplayStatisticsResultsBox_Checked" Unchecked="DisplayStatisticsResultsBox_Unchecked" Height="17" />
+                <TextBox Name="StatisticsSearchResultTextBox" IsEnabled="False" HorizontalAlignment="Stretch" Margin="10,220,10,60" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto" IsReadOnly="True" />
+
+                <Button Name="SaveStatisticsResultButton" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Top" Width="423" Height="45" Content="Сохранить в файл" Background="#2196F3" Foreground="White" BorderBrush="#42A5F5" FontFamily="Segoe UI Semibold" Margin="10,689,0,0" Click="SaveStatisticsResultButton_Click" />
+            </Grid>
+        </Grid>
+
+        <Grid HorizontalAlignment="Left" Height="938" VerticalAlignment="Top" Width="463" Margin="789,10,0,0">
+            <Border BorderBrush="#888" BorderThickness="1" CornerRadius="4" />
+            <Label Content="Нейросетевое обнаружение" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
+
+            <Grid HorizontalAlignment="Left" Height="153" VerticalAlignment="Top" Width="443" Margin="10,26,0,0">
+                <Border BorderBrush="#888" BorderThickness="1" CornerRadius="4" />
+                <Label Content="Нейросетевая модель" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
+
+                <Label Name="NeuralNetworkModelNameLabel" Content="модель не выбрана" ToolTip="Название загруженного файла" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF616161" FontWeight="Bold" HorizontalContentAlignment="Center" Width="423" Margin="10,26,0,0" Height="25"/>
+                <Button Name="GenerateNeuralNetworkModelButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="423" Height="45" Content="Создать модель" Background="#2196F3" Foreground="White" BorderBrush="#42A5F5" FontFamily="Segoe UI Semibold" Margin="10,51,0,0" Click="GenerateNeuralNetworkModelButton_Click" />
+                <Button Name="LoadNeuralNetworkModelButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="423" Height="45" Content="Загрузить модель" Background="#2196F3" Foreground="White" BorderBrush="#42A5F5" FontFamily="Segoe UI Semibold" Margin="10,101,0,0" Click="LoadNeuralNetworkModelButton_Click" />
+            </Grid>
+
+            <Grid HorizontalAlignment="Left" Height="744" VerticalAlignment="Top" Width="443" Margin="10,184,0,0">
+                <Border BorderBrush="#888" BorderThickness="1" CornerRadius="4" />
+                <Label Content="Обнаружение аномалий" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
+
+                <Button Name="SeachAnomaliesByNeuralNetworkButton" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Top" Width="423" Height="45" Content="Искать аномалии" Background="#2196F3" Foreground="White" BorderBrush="#42A5F5" FontFamily="Segoe UI Semibold" Margin="10,26,0,0" Click="SeachAnomaliesByNeuralNetworkButton_Click" />
+
+                <CheckBox Name="DisplayNeuralNetworkResultsBox" Content="Отображать результаты" IsEnabled="False" IsChecked="False" HorizontalAlignment="Left" Margin="10,76,0,0" VerticalAlignment="Top" Width="423" Checked="DisplayNeuralNetworkResultsBox_Checked" Unchecked="DisplayNeuralNetworkResultsBox_Unchecked" Height="17" />
+                <TextBox Name="NeuralNetworkSearchResultTextBox" IsEnabled="False" HorizontalAlignment="Stretch" Margin="10,98,10,60" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto" IsReadOnly="True" />
+
+                <Button Name="SaveNeuralNetworkResultButton" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Top" Width="423" Height="45" Content="Сохранить в файл" Background="#2196F3" Foreground="White" BorderBrush="#42A5F5" FontFamily="Segoe UI Semibold" Margin="10,689,0,0" Click="SaveNeuralNetworkResultButton_Click" />
+            </Grid>
+        </Grid>
+
+        <Label Name="StatusLbl" Content="" Visibility="Hidden" Panel.ZIndex="100" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Segoe UI Black" FontSize="24" FontWeight="Bold" Foreground="#FF252525" Background="#7BFFFFFF"/>
+    </Grid>
+</Window>

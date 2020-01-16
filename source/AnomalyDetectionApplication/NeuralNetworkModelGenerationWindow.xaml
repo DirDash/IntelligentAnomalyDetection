@@ -1,0 +1,66 @@
+﻿<Window x:Class="AnomalyDetectionApplication.NeuralNetworkModelGenerationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AnomalyDetectionApplication"
+        mc:Ignorable="d"
+        Closing="Window_Closing"
+        Title="Генератор нейросетевых моделей" Icon="Resources/anomaly_detection_icon.ico" Width="500" MinWidth="500" Height="960" MinHeight="960" ResizeMode="NoResize" Foreground="Black" WindowStartupLocation="CenterScreen">
+    <Grid Name="MainGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Disabled" Background="#FFE8E8E8" Margin="0,0,0,0">
+        <Grid HorizontalAlignment="Left" Height="895" VerticalAlignment="Top" Width="463" Margin="10,10,0,0">
+            <Border BorderBrush="#888" BorderThickness="1" CornerRadius="4" />
+
+            <Grid HorizontalAlignment="Left" Height="496" VerticalAlignment="Top" Width="443" Margin="10,10,0,0">
+                <Border BorderBrush="#888" BorderThickness="1" CornerRadius="4" />
+                <Label Content="Генерация искусственной нейронной сети" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
+
+                <Label Content="Тип нейронной сети:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="7,26,0,0"/>
+                <ComboBox Name="NeuralNetworkComboBox" ToolTip="Выбор типа нейронной сети" IsEnabled="True" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top" Width="423" VerticalContentAlignment="Center" SelectionChanged="NeuralNetworkComboBox_SelectionChanged" />
+
+                <Label Content="Тип нейронов:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="7,79,0,0"/>
+                <ComboBox Name="NeuronComboBox" ToolTip="Выбор типа нейронов" IsEnabled="True" HorizontalAlignment="Left" Margin="10,105,0,0" VerticalAlignment="Top" Width="423" VerticalContentAlignment="Center" SelectionChanged="NeuronComboBox_SelectionChanged" />
+
+                <Label Content="Количество нейронов в слое:" HorizontalAlignment="Left" Margin="7,132,0,0" VerticalAlignment="Top"/>
+                <TextBox Name="NeuronAmountTextBox" IsEnabled="True" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250" VerticalContentAlignment="Center" Margin="183,135,0,0" />
+
+                <Label Content="Количество синаптических связей:" HorizontalAlignment="Left" Margin="7,163,0,0" VerticalAlignment="Top"/>
+                <TextBox Name="SynapticConnectionAmountTextBox" IsEnabled="True" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="225" VerticalContentAlignment="Center" Margin="208,166,0,0" />
+
+                <Button Name="AddLayerButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="423" Height="45" Content="Добавить слой" Background="#2196F3" Foreground="White" BorderBrush="#42A5F5" FontFamily="Segoe UI Semibold" Margin="10,194,0,0" Click="AddLayerButton_Click" />
+
+                <TextBox Name="NeuralNetworkLayersTextBox" HorizontalAlignment="Stretch" Margin="10,244,10,84" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto" IsReadOnly="True" />
+
+                <Button Name="GenerateNeuralNetworkButton" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Top" Width="423" Height="45" Content="Сгенерировать нейронную сеть" Background="#2196F3" Foreground="White" BorderBrush="#42A5F5" FontFamily="Segoe UI Semibold" Margin="10,417,0,0" Click="GenerateNeuralNetworkButton_Click" />
+                <Label Name="ModelNameLabel" Content="модель не выбрана" ToolTip="Название загруженного файла" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF616161" FontWeight="Bold" HorizontalContentAlignment="Center" Width="423" Margin="10,462,0,0"/>
+            </Grid>
+
+            <Grid HorizontalAlignment="Left" Height="361" VerticalAlignment="Top" Width="443" Margin="10,522,0,0">
+                <Border BorderBrush="#888" BorderThickness="1" CornerRadius="4" />
+                <Label Content="Обучение искусственной нейронной сети" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
+
+                <Label Content="Алгоритм обучения:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="7,26,0,0"/>
+                <ComboBox Name="LearningAlgorythmComboBox" ToolTip="Выбор алгоритма обучения" IsEnabled="False" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top" Width="423" VerticalContentAlignment="Center" SelectionChanged="LearningAlgorythmComboBox_SelectionChanged" />
+
+                <Label Content="Скорость обучения:" HorizontalAlignment="Left" Margin="7,74,0,0" VerticalAlignment="Top" Width="122" Height="29"/>
+                <TextBox Name="LearningSpeedTextBox" IsEnabled="False" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="1,0" VerticalAlignment="Top" Width="307" VerticalContentAlignment="Center" Margin="126,75,0,0" TextChanged="LearningSpeedTextBox_TextChanged" />
+
+                <Label Content="Момент обучения:" HorizontalAlignment="Left" Margin="7,99,0,0" VerticalAlignment="Top" Width="122" Height="29"/>
+                <TextBox Name="MomentumTextBox" IsEnabled="False" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0,000001" VerticalAlignment="Top" Width="313" VerticalContentAlignment="Center" Margin="120,100,0,0" TextChanged="MomentumTextBox_TextChanged" />
+
+                <Label Content="Максимальное количество эпох обучения:" HorizontalAlignment="Left" Margin="7,124,0,0" VerticalAlignment="Top" Width="245" Height="29"/>
+                <TextBox Name="MaxEpochAmountTextBox" IsEnabled="False" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="181" VerticalContentAlignment="Center" Margin="252,125,0,0" TextChanged="MaxEpochAmountTextBox_TextChanged" />
+
+                <Button Name="LoadTrainingSetButton" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Top" Width="423" Height="45" Content="Загрузить обучающую выборку из файла" Background="#2196F3" Foreground="White" BorderBrush="#42A5F5" FontFamily="Segoe UI Semibold" Margin="10,153,0,0" Click="LoadTrainingSetButton_Click" />
+                <Label Name="TrainingSetLabel" Content="обучающая выборка не выбрана" ToolTip="Название загруженного файла" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF616161" FontWeight="Bold" HorizontalContentAlignment="Center" Width="423" Margin="10,198,0,0"/>
+
+                <Button Name="LoadValidationSetButton" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Top" Width="423" Height="45" Content="Загрузить проверочную выборку из файла" Background="#2196F3" Foreground="White" BorderBrush="#42A5F5" FontFamily="Segoe UI Semibold" Margin="10,229,0,0" Click="LoadValidationSetButton_Click" />
+                <Label Name="TestingSetLabel" Content="проверочная выборка не выбрана" ToolTip="Название загруженного файла" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF616161" FontWeight="Bold" HorizontalContentAlignment="Center" Width="423" Margin="10,274,0,0"/>
+
+                <Button Name="TrainNeuralNetworkButton" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Top" Width="423" Height="45" Content="Обучить нейронную сеть" Background="#2196F3" Foreground="White" BorderBrush="#42A5F5" FontFamily="Segoe UI Semibold" Margin="10,305,0,0" Click="TrainNeuralNetworkButton_Click" />
+            </Grid>
+
+            <Label Name="StatusLbl" Content="" Visibility="Hidden" Panel.ZIndex="100" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Segoe UI Black" FontSize="24" FontWeight="Bold" Foreground="#FF252525" Background="#7BFFFFFF" />
+        </Grid>
+    </Grid>
+</Window>
